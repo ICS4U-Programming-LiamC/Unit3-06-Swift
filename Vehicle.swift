@@ -11,10 +11,24 @@
 
 public class Truck: Vehicle {
   
+  override init() {
+    super.init()
+  }
+
+  override init(_ licencePlate: String, _ colour: String, _ numDoors: Int, _ speed: Float, _ maxSpeed: Float) {
+    super.init(licencePlate, colour, numDoors, speed, maxSpeed)
+  }
 }
 
 public class Bike: Vehicle {
   internal var name = ""
+  
+  override init() {
+    self.name = "Default"
+    super.init("Default", "Black", 0, 0, 40)
+  }
+
+  
   init(_ name: String, _ colour: String, _ speed: Float, _ maxSpeed: Float) {
     self.name = name
     super.init(name, colour, 0, speed, maxSpeed)
@@ -39,6 +53,14 @@ public class Vehicle {
   internal var numDoors = 4
   internal var maxSpeed: Float = 200
   internal var speed: Float = 0.0
+
+  init() {
+    self.licencePlate = "AAAA 000"
+    self.colour = "Black"
+    self.numDoors = 4
+    self.speed = 0
+    self.maxSpeed = 240
+  }
 
   // initialize properies
   init(_ licencePlate: String, _ colour: String, _ numDoors: Int, _ speed: Float, _ maxSpeed: Float) {
@@ -311,7 +333,7 @@ public func truckEditor(_ passedArray: [Truck]) -> [Truck] {
       // if the user does not want to make changes
     } else if (userInput == "n") {
       print("You are not moving any trucks");
-      return vehicles
+      break
 
       // displays all vehicles and their information
     } else if (userInput == "view") {
@@ -402,6 +424,7 @@ public func truckEditor(_ passedArray: [Truck]) -> [Truck] {
       print("Please enter either 'y' or 'n'")
     }
   }
+  return vehicles
 }
 
 public func bikeEditor(_ passedArray: [Bike]) -> [Bike] {
@@ -509,7 +532,7 @@ public func bikeEditor(_ passedArray: [Bike]) -> [Bike] {
       // if the user does not want to make changes
     } else if (userInput == "n") {
       print("You are not moving any bikes");
-      return vehicles
+      break
 
       // displays all vehicles and their information
     } else if (userInput == "view") {
@@ -587,6 +610,7 @@ public func bikeEditor(_ passedArray: [Bike]) -> [Bike] {
       print("Please enter either 'y' or 'n'")
     }
   }
+  return vehicles
 }
 
 // main
@@ -596,8 +620,8 @@ public func main() {
   vehicles.append(Vehicle("CTHH 112", "Gray", 4, 0, 180))
   vehicles.append(Vehicle("CCHM 983", "Pink", 4, 0, 175))
 
-  var trucks: [Truck] = [Truck("Truck 112", "Gray", 4, 0, 180)]
-  var bikes: [Bike] = [Bike("Fred", "Pink", 0, 40)]
+  var trucks: [Truck] = [Truck("Truck 112", "Gray", 4, 0, 180), Truck()]
+  var bikes: [Bike] = [Bike("Fred", "Pink", 0, 40), Bike()]
 
   // initial print of vehicles
   // for car in vehicles {
@@ -608,7 +632,7 @@ public func main() {
   var userInput = ""
   while (true) {
     print("Please input what type of vehicle you would like to edit")
-    print("Truck or bike: ", terminator: "")
+    print("Truck or bike, exit to exit: ", terminator: "")
     userInput = readLine()!.lowercased()
     
     if (userInput == "truck" || userInput == "t" || userInput == "truck") {
